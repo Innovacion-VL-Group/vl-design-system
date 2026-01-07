@@ -1,0 +1,60 @@
+{
+  "name": "vl-design-system",
+  "version": "1.0.0",
+  "description": "Color themes and backgrounds library for VL design system",
+  "main": "index.ts",
+  "types": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watchAll",
+    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "build": "tsc",
+    "generate-assets": "node scripts/generate-assets-base64.js",
+    "generate-themes": "node scripts/generate-themes.js"
+  },
+  "keywords": [
+    "design-system",
+    "themes",
+    "colors",
+    "backgrounds",
+    "ui",
+    "design"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.19.27",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.18.0",
+    "globals": "^17.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "import": "./index.ts",
+      "require": "./index.ts"
+    },
+    "./themes/colors": "./themes/colors.js",
+    "./themes/backgrounds": "./themes/backgrounds.js",
+    "./themes/solidThemes": "./themes/solidThemes.js"
+  },
+  "files": [
+    "index.ts",
+    "types.ts",
+    "themes/",
+    "assets-base64.json",
+    "originals/",
+    "scripts/",
+    "README.md"
+  ]
+}
