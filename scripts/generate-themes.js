@@ -159,7 +159,7 @@ function generateThemeFile(themeName, tokensFile, colors) {
   const outputPath = join(THEMES_DIR, `${themeName}.colors.ts`);
 
   writeFileSync(outputPath, themeContent);
-  console.log(`✅ Generated ${themeName}.colors.ts`);
+  console.info(`✅ Generated ${themeName}.colors.ts`);
 }
 
 function generateAllThemes() {
@@ -177,7 +177,7 @@ function generateAllThemes() {
     }
   });
 
-  console.log(`\n✅ ${successCount} theme files generated successfully`);
+  console.info(`\n✅ ${successCount} theme files generated successfully`);
   
   if (errorCount > 0) {
     console.warn(`⚠️  ${errorCount} theme files failed to generate`);

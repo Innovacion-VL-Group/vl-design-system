@@ -38,7 +38,7 @@ function generateAssetsBase64() {
   ASSETS.forEach((asset) => {
     try {
       assetsBase64[asset] = convertAssetToBase64(asset);
-      console.log(`✅ Converted: ${asset}`);
+      console.info(`✅ Converted: ${asset}`);
       successCount++;
     } catch (error) {
       console.error(`❌ Error converting ${asset}:`, error.message);
@@ -47,7 +47,7 @@ function generateAssetsBase64() {
   });
 
   writeFileSync(OUTPUT_FILE, JSON.stringify(assetsBase64, null, 2));
-  console.log(`\n✅ ${successCount} assets converted successfully`);
+  console.info(`\n✅ ${successCount} assets converted successfully`);
   
   if (errorCount > 0) {
     console.warn(`⚠️  ${errorCount} assets failed to convert`);
