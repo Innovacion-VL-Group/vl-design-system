@@ -19,16 +19,16 @@ export interface BackgroundCategory {
 }
 
 export interface Backgrounds {
-  'Dark glass': BackgroundCategory;
-  'Light glass': BackgroundCategory;
-  'Solid themes': BackgroundCategory;
+  'dark-glass': BackgroundCategory;
+  'light-glass': BackgroundCategory;
+  'solid-themes': BackgroundCategory;
 }
 
 export interface Themes {
-  'Dark.Glass': string;
-  'Light.Glass': string;
-  'Dark.Solid': string;
-  'Light.Solid': string;
+  'dark-glass': string;
+  'light-glass': string;
+  'dark-solid': string;
+  'light-solid': string;
 }
 
 export interface Design {
@@ -50,8 +50,8 @@ export interface SmallImage {
   thumbnail?: string;
 }
 
-export type ThemeKey = 'Dark.Glass' | 'Light.Glass' | 'Dark.Solid' | 'Light.Solid';
-export type BackgroundCategoryKey = 'Dark glass' | 'Light glass' | 'Solid themes';
+export type ThemeKey = 'dark-glass' | 'light-glass' | 'dark-solid' | 'light-solid';
+export type BackgroundCategoryKey = 'dark-glass' | 'light-glass' | 'solid-themes';
 
 export interface ThemeColors {
   [key: string]: string;

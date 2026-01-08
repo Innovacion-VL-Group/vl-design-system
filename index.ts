@@ -13,16 +13,23 @@ import type {
 import type { ColorName, ColorValue } from './originals/colors.js';
 
 const THEME_TO_CATEGORY_MAP: Record<string, BackgroundCategoryKey> = {
-  'Dark.Glass': 'Dark glass',
-  'Light.Glass': 'Light glass',
-  'Dark.Solid': 'Solid themes',
-  'Light.Solid': 'Solid themes',
-  darkGlass: 'Dark glass',
-  lightGlass: 'Light glass',
-  darkSolid: 'Solid themes',
-  lightSolid: 'Solid themes',
-  solidDark: 'Solid themes',
-  solidWhite: 'Solid themes'
+  'dark-glass': 'dark-glass',
+  'light-glass': 'light-glass',
+  'dark-solid': 'solid-themes',
+  'light-solid': 'solid-themes',
+  'Dark.Glass': 'dark-glass',
+  'Light.Glass': 'light-glass',
+  'Dark.Solid': 'solid-themes',
+  'Light.Solid': 'solid-themes',
+  'Dark glass': 'dark-glass',
+  'Light glass': 'light-glass',
+  'Solid themes': 'solid-themes',
+  darkGlass: 'dark-glass',
+  lightGlass: 'light-glass',
+  darkSolid: 'solid-themes',
+  lightSolid: 'solid-themes',
+  solidDark: 'solid-themes',
+  solidWhite: 'solid-themes'
 };
 
 function createImageBackground(
@@ -61,7 +68,7 @@ function initializeDefaults(): DesignDefaults {
 
 function initializeBackgrounds(): Backgrounds {
   return {
-    'Dark glass': {
+    'dark-glass': {
       'bg-dark-1': createImageBackground(
         'Dark Glass 1',
         'bg-dark-1.webp',
@@ -78,7 +85,7 @@ function initializeBackgrounds(): Backgrounds {
         assetsBase64['bg-dark-3.webp'] || ''
       )
     },
-    'Light glass': {
+    'light-glass': {
       'bg-light-1': createImageBackground(
         'Light Glass 1',
         'bg-light-1.webp',
@@ -90,7 +97,7 @@ function initializeBackgrounds(): Backgrounds {
         assetsBase64['bg-light-2.webp'] || ''
       )
     },
-    'Solid themes': {
+    'solid-themes': {
       'solid-dark': createSolidBackground('Dark Solid', colors['Default-Black']),
       'solid-white': createSolidBackground('White Solid', colors['Default-White'])
     }
@@ -101,10 +108,10 @@ const design: Design = {
   defaults: initializeDefaults(),
   backgrounds: initializeBackgrounds(),
   themes: {
-    'Dark.Glass': './themes/Dark.Glass.colors.ts',
-    'Light.Glass': './themes/Light.Glass.colors.ts',
-    'Dark.Solid': './themes/Dark.Solid.colors.ts',
-    'Light.Solid': './themes/Light.Solid.colors.ts'
+    'dark-glass': './themes/Dark.Glass.colors.ts',
+    'light-glass': './themes/Light.Glass.colors.ts',
+    'dark-solid': './themes/Dark.Solid.colors.ts',
+    'light-solid': './themes/Light.Solid.colors.ts'
   }
 };
 

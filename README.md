@@ -18,8 +18,8 @@ const primaryColor = design.defaults['Pimary-Regular'];
 const blackColor = design.defaults['Default-Black'];
 
 // Access backgrounds
-const darkBg = design.backgrounds['Dark glass']['bg-dark-1'];
-const solidBg = design.backgrounds['Solid themes']['solid-dark'];
+const darkBg = design.backgrounds['dark-glass']['bg-dark-1'];
+const solidBg = design.backgrounds['solid-themes']['solid-dark'];
 ```
 
 ## Usage in Next.js
@@ -33,8 +33,8 @@ import Image from 'next/image';
 import design from 'vl-design-system';
 
 export function BackgroundSelector() {
-  const darkGlassBg = design.backgrounds['Dark glass']['bg-dark-1'];
-  const solidDark = design.backgrounds['Solid themes']['solid-dark'];
+  const darkGlassBg = design.backgrounds['dark-glass']['bg-dark-1'];
+  const solidDark = design.backgrounds['solid-themes']['solid-dark'];
 
   return (
     <div>
@@ -80,9 +80,9 @@ export function BackgroundSelector() {
 
 Backgrounds are organized in three categories:
 
-- **Dark glass**: Dark backgrounds with glass effect
-- **Light glass**: Light backgrounds with glass effect  
-- **Solid themes**: Solid colors (dark and white)
+- **dark-glass**: Dark backgrounds with glass effect
+- **light-glass**: Light backgrounds with glass effect  
+- **solid-themes**: Solid colors (dark and white)
 
 Each background has:
 - `name`: Descriptive name
@@ -93,10 +93,10 @@ Each background has:
 
 ## Available Themes
 
-- `Dark.Glass`
-- `Light.Glass`
-- `Dark.Solid`
-- `Light.Solid`
+- `dark-glass`
+- `light-glass`
+- `dark-solid`
+- `light-solid`
 
 ## API
 
@@ -117,7 +117,7 @@ Get a background by theme and background name. If the background is not found in
 ```typescript
 import { getBackground } from 'vl-design-system';
 
-const bg = getBackground({ theme: 'solidDark', bg: 'bg-dark-2' });
+const bg = getBackground({ theme: 'dark-glass', bg: 'bg-dark-2' });
 // Returns the background object or null if not found
 ```
 
@@ -128,7 +128,7 @@ Get an array of all available theme names.
 import { getThemeNames } from 'vl-design-system';
 
 const themes = getThemeNames();
-// Returns: ['Dark.Glass', 'Light.Glass', 'Dark.Solid', 'Light.Solid']
+// Returns: ['dark-glass', 'light-glass', 'dark-solid', 'light-solid']
 ```
 
 #### `getAllImagesSmall()`

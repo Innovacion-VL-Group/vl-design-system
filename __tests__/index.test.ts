@@ -21,13 +21,13 @@ describe('Design System', () => {
 
   describe('design.backgrounds', () => {
     it('should have all background categories', () => {
-      expect(design.backgrounds).toHaveProperty('Dark glass');
-      expect(design.backgrounds).toHaveProperty('Light glass');
-      expect(design.backgrounds).toHaveProperty('Solid themes');
+      expect(design.backgrounds).toHaveProperty('dark-glass');
+      expect(design.backgrounds).toHaveProperty('light-glass');
+      expect(design.backgrounds).toHaveProperty('solid-themes');
     });
 
     it('should have image backgrounds with dataUrl', () => {
-      const darkGlass = design.backgrounds['Dark glass'];
+      const darkGlass = design.backgrounds['dark-glass'];
       expect(darkGlass['bg-dark-1']).toMatchObject({
         name: 'Dark Glass 1',
         type: 'image',
@@ -38,7 +38,7 @@ describe('Design System', () => {
     });
 
     it('should have solid backgrounds with color values', () => {
-      const solidThemes = design.backgrounds['Solid themes'];
+      const solidThemes = design.backgrounds['solid-themes'];
       expect(solidThemes['solid-dark']).toMatchObject({
         name: 'Dark Solid',
         type: 'solid',
@@ -54,10 +54,10 @@ describe('Design System', () => {
 
   describe('design.themes', () => {
     it('should have all theme paths', () => {
-      expect('Dark.Glass' in design.themes).toBe(true);
-      expect('Light.Glass' in design.themes).toBe(true);
-      expect('Dark.Solid' in design.themes).toBe(true);
-      expect('Light.Solid' in design.themes).toBe(true);
+      expect('dark-glass' in design.themes).toBe(true);
+      expect('light-glass' in design.themes).toBe(true);
+      expect('dark-solid' in design.themes).toBe(true);
+      expect('light-solid' in design.themes).toBe(true);
     });
 
     it('should have valid theme file paths', () => {
@@ -69,7 +69,7 @@ describe('Design System', () => {
 
   describe('getBackground', () => {
     it('should return background for valid theme and bg', () => {
-      const bg = getBackground({ theme: 'Dark.Glass', bg: 'bg-dark-1' });
+      const bg = getBackground({ theme: 'dark-glass', bg: 'bg-dark-1' });
       expect(bg).not.toBeNull();
       expect(bg?.name).toBe('Dark Glass 1');
       expect(bg?.type).toBe('image');
@@ -77,10 +77,22 @@ describe('Design System', () => {
 
     it('should return background using alternative theme names', () => {
       const bg1 = getBackground({ theme: 'darkGlass', bg: 'bg-dark-1' });
-      const bg2 = getBackground({ theme: 'solidDark', bg: 'solid-dark' });
+      const bg2 = getBackground({ theme: 'dark-solid', bg: 'solid-dark' });
       
       expect(bg1).not.toBeNull();
       expect(bg2).not.toBeNull();
+    });
+
+    it('should support legacy theme names for backward compatibility', () => {
+      const bg1 = getBackground({ theme: 'Dark.Glass', bg: 'bg-dark-1' });
+      const bg2 = getBackground({ theme: 'Dark glass', bg: 'bg-dark-1' });
+      const bg3 = getBackground({ theme: 'Dark.Solid', bg: 'solid-dark' });
+      const bg4 = getBackground({ theme: 'Solid themes', bg: 'solid-dark' });
+      
+      expect(bg1).not.toBeNull();
+      expect(bg2).not.toBeNull();
+      expect(bg3).not.toBeNull();
+      expect(bg4).not.toBeNull();
     });
 
     it('should search in all categories if not found in specified theme', () => {
@@ -90,7 +102,7 @@ describe('Design System', () => {
     });
 
     it('should return null for non-existent background', () => {
-      const bg = getBackground({ theme: 'Dark.Glass', bg: 'non-existent' });
+      const bg = getBackground({ theme: 'dark-glass', bg: 'non-existent' });
       expect(bg).toBeNull();
     });
   });
@@ -100,10 +112,10 @@ describe('Design System', () => {
       const themes = getThemeNames();
       expect(Array.isArray(themes)).toBe(true);
       expect(themes.length).toBe(4);
-      expect(themes).toContain('Dark.Glass');
-      expect(themes).toContain('Light.Glass');
-      expect(themes).toContain('Dark.Solid');
-      expect(themes).toContain('Light.Solid');
+      expect(themes).toContain('dark-glass');
+      expect(themes).toContain('light-glass');
+      expect(themes).toContain('dark-solid');
+      expect(themes).toContain('light-solid');
     });
   });
 
@@ -128,7 +140,7 @@ describe('Design System', () => {
     it('should not include solid backgrounds', () => {
       const images = getAllImagesSmall();
       const solidBackgrounds = images.filter(
-        (img) => img.category === 'Solid themes'
+        (img) => img.category === 'solid-themes'
       );
       expect(solidBackgrounds.length).toBe(0);
     });
