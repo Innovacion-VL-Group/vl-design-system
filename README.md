@@ -176,6 +176,16 @@ Auto-fix linting issues:
 npm run lint:fix
 ```
 
+### Building
+
+Compile TypeScript to JavaScript:
+
+```bash
+npm run build
+```
+
+This generates the `dist/` folder with compiled JavaScript files and type definitions. The build is automatically run before publishing.
+
 ### Generating Assets and Themes
 
 Generate base64 assets:

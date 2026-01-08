@@ -2,8 +2,8 @@
   "name": "vl-design-system",
   "version": "1.0.0",
   "description": "Color themes and backgrounds library for VL design system",
-  "main": "index.ts",
-  "types": "index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
@@ -11,7 +11,8 @@
     "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json && cp assets-base64.json dist/",
+    "prepublishOnly": "npm run build",
     "generate-assets": "node scripts/generate-assets-base64.js",
     "generate-themes": "node scripts/generate-themes.js"
   },
@@ -40,21 +41,29 @@
   },
   "exports": {
     ".": {
-      "types": "./index.ts",
-      "import": "./index.ts",
-      "require": "./index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
-    "./themes/colors": "./themes/colors.js",
-    "./themes/backgrounds": "./themes/backgrounds.js",
-    "./themes/solidThemes": "./themes/solidThemes.js"
+    "./themes/colors": {
+      "types": "./dist/themes/colors.d.ts",
+      "import": "./dist/themes/colors.js",
+      "require": "./dist/themes/colors.js"
+    },
+    "./themes/backgrounds": {
+      "types": "./dist/themes/backgrounds.d.ts",
+      "import": "./dist/themes/backgrounds.js",
+      "require": "./dist/themes/backgrounds.js"
+    },
+    "./themes/solidThemes": {
+      "types": "./dist/themes/solidThemes.d.ts",
+      "import": "./dist/themes/solidThemes.js",
+      "require": "./dist/themes/solidThemes.js"
+    }
   },
   "files": [
-    "index.ts",
-    "types.ts",
-    "themes/",
+    "dist/",
     "assets-base64.json",
-    "originals/",
-    "scripts/",
     "README.md"
   ]
 }

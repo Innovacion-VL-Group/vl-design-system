@@ -1,4 +1,4 @@
-import { colors } from './originals/colors.ts';
+import { colors } from './originals/colors.js';
 import assetsBase64 from './assets-base64.json' with { type: 'json' };
 import type {
   DesignDefaults,
@@ -10,7 +10,7 @@ import type {
   SmallImage,
   BackgroundCategoryKey
 } from './types.js';
-import type { ColorName, ColorValue } from './originals/colors.ts';
+import type { ColorName, ColorValue } from './originals/colors.js';
 
 const THEME_TO_CATEGORY_MAP: Record<string, BackgroundCategoryKey> = {
   'dark-glass': 'dark-glass',
