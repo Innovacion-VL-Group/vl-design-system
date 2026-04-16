@@ -1,6 +1,6 @@
 {
   "name": "vl-design-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Color themes and backgrounds library for VL design system",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

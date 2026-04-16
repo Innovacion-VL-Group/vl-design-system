@@ -14,8 +14,14 @@ const ASSETS = [
   'bg-dark-1.webp',
   'bg-dark-2.webp',
   'bg-dark-3.webp',
+  'bg-dark-4.webp',
+  'bg-dark-5.webp',
+  'bg-dark-6.webp',
+  'bg-dark-7.webp',
+  'bg-dark-8.webp',
   'bg-light-1.webp',
-  'bg-light-2.webp'
+  'bg-light-2.webp',
+  'bg-light-3.webp'
 ];
 
 function convertAssetToBase64(assetName) {

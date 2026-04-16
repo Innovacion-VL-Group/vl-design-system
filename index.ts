@@ -83,6 +83,31 @@ function initializeBackgrounds(): Backgrounds {
         'Dark Glass 3',
         'bg-dark-3.webp',
         assetsBase64['bg-dark-3.webp'] || ''
+      ),
+      'bg-dark-4': createImageBackground(
+        'Dark Glass 4',
+        'bg-dark-4.webp',
+        assetsBase64['bg-dark-4.webp'] || ''
+      ),
+      'bg-dark-5': createImageBackground(
+        'Dark Glass 5',
+        'bg-dark-5.webp',
+        assetsBase64['bg-dark-5.webp'] || ''
+      ),
+      'bg-dark-6': createImageBackground(
+        'Dark Glass 6',
+        'bg-dark-6.webp',
+        assetsBase64['bg-dark-6.webp'] || ''
+      ),
+      'bg-dark-7': createImageBackground(
+        'Dark Glass 7',
+        'bg-dark-7.webp',
+        assetsBase64['bg-dark-7.webp'] || ''
+      ),
+      'bg-dark-8': createImageBackground(
+        'Dark Glass 8',
+        'bg-dark-8.webp',
+        assetsBase64['bg-dark-8.webp'] || ''
       )
     },
     'light-glass': {
@@ -95,6 +120,11 @@ function initializeBackgrounds(): Backgrounds {
         'Light Glass 2',
         'bg-light-2.webp',
         assetsBase64['bg-light-2.webp'] || ''
+      ),
+      'bg-light-3': createImageBackground(
+        'Light Glass 3',
+        'bg-light-3.webp',
+        assetsBase64['bg-light-3.webp'] || ''
       )
     },
     'solid-themes': {
