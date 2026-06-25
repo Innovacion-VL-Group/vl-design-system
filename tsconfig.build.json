@@ -10,8 +10,7 @@
   "include": [
     "index.ts",
     "types.ts",
-    "originals/**/*.ts",
-    "themes/**/*.ts"
+    "theme/index.ts"
   ],
   "exclude": [
     "node_modules",
@@ -21,4 +20,3 @@
     "**/*.test.ts"
   ]
 }
-

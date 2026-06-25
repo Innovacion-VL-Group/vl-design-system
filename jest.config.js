@@ -28,8 +28,7 @@ export default {
   transformIgnorePatterns: [],
   collectCoverageFrom: [
     'index.ts',
-    'originals/**/*.ts',
-    'themes/**/*.ts',
+    'types.ts',
     '!**/*.d.ts',
     '!**/__tests__/**',
     '!**/node_modules/**'

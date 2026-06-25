@@ -1,29 +1,10 @@
-import design, { getBackground, getThemeNames, getAllImagesSmall } from '../index.js';
-import { colors, type ColorName } from '../originals/colors.js';
+import design, { getBackground, getAllImagesSmall } from '../index.js';
 
 describe('Design System', () => {
-  describe('design.defaults', () => {
-    it('should have all colors from colors.ts', () => {
-      const colorKeys = Object.keys(colors) as ColorName[];
-      expect(Object.keys(design.defaults)).toHaveLength(colorKeys.length);
-      
-      colorKeys.forEach((key) => {
-        expect(design.defaults[key]).toBe(colors[key]);
-      });
-    });
-
-    it('should have valid hex color values', () => {
-      Object.values(design.defaults).forEach((color) => {
-        expect(color).toMatch(/^#[0-9A-Fa-f]{6}$/);
-      });
-    });
-  });
-
   describe('design.backgrounds', () => {
     it('should have all background categories', () => {
       expect(design.backgrounds).toHaveProperty('dark-glass');
       expect(design.backgrounds).toHaveProperty('light-glass');
-      expect(design.backgrounds).toHaveProperty('solid-themes');
     });
 
     it('should have image backgrounds with dataUrl', () => {
@@ -37,33 +18,9 @@ describe('Design System', () => {
       expect(darkGlass['bg-dark-1'].dataUrl).toMatch(/^data:image\/webp;base64,/);
     });
 
-    it('should have solid backgrounds with color values', () => {
-      const solidThemes = design.backgrounds['solid-themes'];
-      expect(solidThemes['solid-dark']).toMatchObject({
-        name: 'Dark Solid',
-        type: 'solid',
-        value: colors['Default-Black']
-      });
-      expect(solidThemes['solid-white']).toMatchObject({
-        name: 'White Solid',
-        type: 'solid',
-        value: colors['Default-White']
-      });
-    });
-  });
-
-  describe('design.themes', () => {
-    it('should have all theme paths', () => {
-      expect('dark-glass' in design.themes).toBe(true);
-      expect('light-glass' in design.themes).toBe(true);
-      expect('dark-solid' in design.themes).toBe(true);
-      expect('light-solid' in design.themes).toBe(true);
-    });
-
-    it('should have valid theme file paths', () => {
-      Object.values(design.themes).forEach((path) => {
-        expect(path).toMatch(/^\.\/themes\/.*\.colors\.ts$/);
-      });
+    it('should have 8 dark and 3 light backgrounds', () => {
+      expect(Object.keys(design.backgrounds['dark-glass'])).toHaveLength(8);
+      expect(Object.keys(design.backgrounds['light-glass'])).toHaveLength(3);
     });
   });
 
@@ -77,22 +34,18 @@ describe('Design System', () => {
 
     it('should return background using alternative theme names', () => {
       const bg1 = getBackground({ theme: 'darkGlass', bg: 'bg-dark-1' });
-      const bg2 = getBackground({ theme: 'dark-solid', bg: 'solid-dark' });
-      
+      const bg2 = getBackground({ theme: 'light-glass', bg: 'bg-light-1' });
+
       expect(bg1).not.toBeNull();
       expect(bg2).not.toBeNull();
     });
 
     it('should support legacy theme names for backward compatibility', () => {
       const bg1 = getBackground({ theme: 'Dark.Glass', bg: 'bg-dark-1' });
-      const bg2 = getBackground({ theme: 'Dark glass', bg: 'bg-dark-1' });
-      const bg3 = getBackground({ theme: 'Dark.Solid', bg: 'solid-dark' });
-      const bg4 = getBackground({ theme: 'Solid themes', bg: 'solid-dark' });
-      
+      const bg2 = getBackground({ theme: 'Light glass', bg: 'bg-light-1' });
+
       expect(bg1).not.toBeNull();
       expect(bg2).not.toBeNull();
-      expect(bg3).not.toBeNull();
-      expect(bg4).not.toBeNull();
     });
 
     it('should search in all categories if not found in specified theme', () => {
@@ -107,26 +60,14 @@ describe('Design System', () => {
     });
   });
 
-  describe('getThemeNames', () => {
-    it('should return array of theme names', () => {
-      const themes = getThemeNames();
-      expect(Array.isArray(themes)).toBe(true);
-      expect(themes.length).toBe(4);
-      expect(themes).toContain('dark-glass');
-      expect(themes).toContain('light-glass');
-      expect(themes).toContain('dark-solid');
-      expect(themes).toContain('light-solid');
-    });
-  });
-
   describe('getAllImagesSmall', () => {
     it('should return array of image backgrounds', () => {
       const images = getAllImagesSmall();
       expect(Array.isArray(images)).toBe(true);
-      expect(images.length).toBeGreaterThan(0);
+      expect(images.length).toBe(11);
     });
 
-    it('should only include image type backgrounds', () => {
+    it('should include all image backgrounds with required fields', () => {
       const images = getAllImagesSmall();
       images.forEach((image) => {
         expect(image.dataUrl).toBeDefined();
@@ -136,14 +77,5 @@ describe('Design System', () => {
         expect(image.src).toBeDefined();
       });
     });
-
-    it('should not include solid backgrounds', () => {
-      const images = getAllImagesSmall();
-      const solidBackgrounds = images.filter(
-        (img) => img.category === 'solid-themes'
-      );
-      expect(solidBackgrounds.length).toBe(0);
-    });
   });
 });
-

@@ -48,7 +48,6 @@ export default [
       'coverage/',
       '*.config.js',
       'assets-base64.json',
-      'tokens/',
       'scripts/',
       '__pycache__/'
     ]

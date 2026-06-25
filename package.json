@@ -1,7 +1,7 @@
 {
   "name": "vl-design-system",
   "version": "1.0.1",
-  "description": "Color themes and backgrounds library for VL design system",
+  "description": "Backgrounds and HeroUI theme tokens for VL design system",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -14,13 +14,13 @@
     "build": "tsc -p tsconfig.build.json && cp assets-base64.json dist/",
     "prepublishOnly": "npm run build",
     "generate-assets": "node scripts/generate-assets-base64.js",
-    "generate-themes": "node scripts/generate-themes.js"
+    "generate-theme": "node scripts/generate-heroui-theme.js"
   },
   "keywords": [
     "design-system",
-    "themes",
-    "colors",
     "backgrounds",
+    "heroui",
+    "theme",
     "ui",
     "design"
   ],
@@ -36,7 +36,6 @@
     "globals": "^17.0.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
-    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "exports": {
@@ -45,24 +44,16 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
-    "./themes/colors": {
-      "types": "./dist/themes/colors.d.ts",
-      "import": "./dist/themes/colors.js",
-      "require": "./dist/themes/colors.js"
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "import": "./dist/theme/index.js",
+      "require": "./dist/theme/index.js"
     },
-    "./themes/backgrounds": {
-      "types": "./dist/themes/backgrounds.d.ts",
-      "import": "./dist/themes/backgrounds.js",
-      "require": "./dist/themes/backgrounds.js"
-    },
-    "./themes/solidThemes": {
-      "types": "./dist/themes/solidThemes.d.ts",
-      "import": "./dist/themes/solidThemes.js",
-      "require": "./dist/themes/solidThemes.js"
-    }
+    "./theme/heroui-theme.css": "./theme/heroui-theme.css"
   },
   "files": [
     "dist/",
+    "theme/heroui-theme.css",
     "assets-base64.json",
     "README.md"
   ]
