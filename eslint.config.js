@@ -6,16 +6,18 @@ import globals from 'globals';
 export default [
   js.configs.recommended,
   {
-    files: ['**/*.ts'],
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
       parser: tsparser,
       parserOptions: {
         ecmaVersion: 2022,
         sourceType: 'module',
+        ecmaFeatures: { jsx: true },
         project: './tsconfig.json'
       },
       globals: {
         ...globals.node,
+        ...globals.browser,
         ...globals.jest
       }
     },
@@ -46,6 +48,7 @@ export default [
       'node_modules/',
       'dist/',
       'coverage/',
+      'storybook-static/',
       '*.config.js',
       'assets-base64.json',
       'scripts/',
@@ -53,4 +56,3 @@ export default [
     ]
   }
 ];
-

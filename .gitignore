@@ -1,4 +1,5 @@
 node_modules/
+.pnpm-store/
 dist/
 __pycache__/
 *.log
@@ -8,3 +9,7 @@ __pycache__/
 coverage/
 *.lcov
 .eslintcache
+storybook-static/
+package-lock.json
+yarn.lock
+npm-shrinkwrap.json
