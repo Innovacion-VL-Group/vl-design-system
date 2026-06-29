@@ -19,7 +19,7 @@ function getNavItemClassName(
       ? variant === "sub"
         ? "bg-accent-soft text-accent-soft-foreground"
         : "bg-default text-default-foreground"
-      : "text-default-foreground hover:bg-default/60",
+      : "text-default-foreground hover:bg-default-hover",
   ) as string;
 }
 
@@ -64,7 +64,7 @@ export function SidebarNavItem({
       <button
         type="button"
         onClick={item.onClick}
-        className={cn(className, "cursor-pointer border-0 bg-transparent")}
+        className={cn(className, "cursor-pointer border-0 bg-default/0")}
       >
         {content}
       </button>

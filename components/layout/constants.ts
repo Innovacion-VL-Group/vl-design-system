@@ -11,3 +11,10 @@ export const DEFAULT_SIDEBAR_MOTION: SidebarMotionConfig = {
     ease: [0.32, 0.72, 0, 1],
   },
 };
+
+export const APP_HEADER_HEIGHT = "4rem";
+
+export const MOBILE_SIDEBAR_LAYOUT_CLASSES =
+  "fixed top-16 left-0 z-40 h-[calc(100dvh-4rem)] md:relative md:top-auto md:z-auto md:h-full";
+
+export const MOBILE_MENU_BLUR_CLASSES = "max-md:backdrop-blur-sm";

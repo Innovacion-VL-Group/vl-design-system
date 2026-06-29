@@ -11,14 +11,23 @@ const OUTPUT = join(ROOT, 'theme', 'heroui-theme.css');
 
 const FIGMA_TO_HEROUI = {
   'accent/accent': 'accent',
+  'accent/accent-hover': 'accent-hover',
   'accent/accent-foreground': 'accent-foreground',
+  'accent/accent-soft': 'accent-soft',
+  'accent/accent-soft-hover': 'accent-soft-hover',
+  'accent/accent-soft-foreground': 'accent-soft-foreground',
   'background/background': 'background',
+  'background/background-secondary': 'background-secondary',
+  'background/background-tertiary': 'background-tertiary',
   border: 'border',
   'danger/danger': 'danger',
   'danger/danger-foreground': 'danger-foreground',
   'default/default': 'default',
+  'default/default-hover': 'default-hover',
   'default/default-foreground': 'default-foreground',
   'field/background': 'field-background',
+  'field/background-hover': 'field-hover',
+  'field/background-focus': 'field-focus',
   'field/border': 'field-border',
   'field/foreground': 'field-foreground',
   'field/placeholder': 'field-placeholder',
@@ -43,6 +52,56 @@ const FIGMA_TO_HEROUI = {
   'warning/warning-foreground': 'warning-foreground'
 };
 
+/** HeroUI-compatible tokens derived from theme primitives when Figma has no explicit value. */
+const DERIVED_THEME_TOKENS = {
+  'surface-hover':
+    'color-mix(in oklab, var(--surface) 92%, var(--surface-foreground) 8%)',
+  'background-inverse': 'var(--foreground)',
+  'default-soft': 'color-mix(in oklab, var(--default) 50%, transparent)',
+  'default-soft-foreground': 'var(--default-foreground)',
+  'default-soft-hover': 'color-mix(in oklab, var(--default) 60%, transparent)',
+  'accent-hover': 'color-mix(in oklab, var(--accent) 90%, var(--accent-foreground) 10%)',
+  'accent-soft': 'color-mix(in oklab, var(--accent) 15%, transparent)',
+  'accent-soft-foreground':
+    'color-mix(in oklab, var(--accent) 70%, var(--foreground) 30%)',
+  'accent-soft-hover': 'color-mix(in oklab, var(--accent) 20%, transparent)',
+  'danger-soft': 'color-mix(in oklab, var(--danger) 15%, transparent)',
+  'danger-soft-foreground':
+    'color-mix(in oklab, var(--danger) 70%, var(--foreground) 40%)',
+  'danger-soft-hover': 'color-mix(in oklab, var(--danger) 20%, transparent)',
+  'warning-soft': 'color-mix(in oklab, var(--warning) 15%, transparent)',
+  'warning-soft-foreground':
+    'color-mix(in oklab, var(--warning) 80%, var(--foreground) 70%)',
+  'warning-soft-hover': 'color-mix(in oklab, var(--warning) 20%, transparent)',
+  'success-soft': 'color-mix(in oklab, var(--success) 15%, transparent)',
+  'success-soft-foreground':
+    'color-mix(in oklab, var(--success) 80%, var(--foreground) 60%)',
+  'success-soft-hover': 'color-mix(in oklab, var(--success) 20%, transparent)',
+  'separator-secondary':
+    'color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%)',
+  'separator-tertiary':
+    'color-mix(in oklab, var(--surface) 81%, var(--surface-foreground) 19%)',
+  'border-secondary':
+    'color-mix(in oklab, var(--surface) 78%, var(--surface-foreground) 22%)',
+  'border-tertiary':
+    'color-mix(in oklab, var(--surface) 66%, var(--surface-foreground) 34%)',
+  'field-hover':
+    'color-mix(in oklab, var(--field-background, var(--default)) 90%, var(--field-foreground, var(--foreground)) 2%)',
+  'field-focus': 'var(--field-background, var(--default))',
+  'field-border-hover':
+    'color-mix(in oklab, var(--field-border, var(--border)) 88%, var(--field-foreground, var(--foreground)) 10%)',
+  'field-border-focus':
+    'color-mix(in oklab, var(--field-border, var(--border)) 74%, var(--field-foreground, var(--foreground)) 22%)',
+  'default-hover':
+    'color-mix(in oklab, var(--default) 96%, var(--default-foreground) 4%)',
+  'success-hover':
+    'color-mix(in oklab, var(--success) 90%, var(--success-foreground) 10%)',
+  'warning-hover':
+    'color-mix(in oklab, var(--warning) 90%, var(--warning-foreground) 10%)',
+  'danger-hover':
+    'color-mix(in oklab, var(--danger) 90%, var(--danger-foreground) 10%)'
+};
+
 const GLASS_OVERRIDES = {
   'light-glass': {
     Light: {
@@ -52,8 +111,8 @@ const GLASS_OVERRIDES = {
       'surface-tertiary': { hex: '#eaeaeb', alpha: 0.38 },
       overlay: { hex: '#ffffff', alpha: 0.65 },
       'field-background': { hex: '#ffffff', alpha: 0.42 },
-      'field-background-hover': { hex: '#ffffff', alpha: 0.52 },
-      'field-background-focus': { hex: '#ffffff', alpha: 0.58 },
+      'field-hover': { hex: '#ffffff', alpha: 0.52 },
+      'field-focus': { hex: '#ffffff', alpha: 0.58 },
       segment: { hex: '#ffffff', alpha: 0.5 },
       default: { hex: '#eff6ff', alpha: 0.45 },
       border: { hex: '#dedee0', alpha: 0.55 },
@@ -68,8 +127,8 @@ const GLASS_OVERRIDES = {
       'surface-tertiary': { hex: '#262728', alpha: 0.38 },
       overlay: { hex: '#18181b', alpha: 0.62 },
       'field-background': { hex: '#18181b', alpha: 0.4 },
-      'field-background-hover': { hex: '#1c1c1f', alpha: 0.48 },
-      'field-background-focus': { hex: '#18181b', alpha: 0.55 },
+      'field-hover': { hex: '#1c1c1f', alpha: 0.48 },
+      'field-focus': { hex: '#18181b', alpha: 0.55 },
       segment: { hex: '#46464c', alpha: 0.55 },
       default: { hex: '#27272a', alpha: 0.5 },
       border: { hex: '#28282c', alpha: 0.65 },
@@ -140,6 +199,7 @@ function colorToCss(value) {
 function buildThemeVars(variables, mode, overrides = {}) {
   const byName = Object.fromEntries(variables.map((v) => [v.name, v]));
   const lines = [];
+  const resolvedNames = new Set();
 
   for (const [figmaName, cssName] of Object.entries(FIGMA_TO_HEROUI)) {
     const variable = byName[figmaName];
@@ -150,11 +210,25 @@ function buildThemeVars(variables, mode, overrides = {}) {
 
     if (variable.resolvedType === 'COLOR') {
       const css = colorToCss(raw);
-      if (css) lines.push(`  --${cssName}: ${css};`);
+      if (css) {
+        lines.push(`  --${cssName}: ${css};`);
+        resolvedNames.add(cssName);
+      }
     }
   }
 
-  return lines;
+  return { lines, resolvedNames };
+}
+
+function buildDerivedThemeVars(resolvedNames) {
+  const lines = ['', '  /* Derived Colors (HeroUI-compatible) */'];
+
+  for (const [cssName, value] of Object.entries(DERIVED_THEME_TOKENS)) {
+    if (resolvedNames.has(cssName)) continue;
+    lines.push(`  --${cssName}: ${value};`);
+  }
+
+  return lines.length > 2 ? lines : [];
 }
 
 function buildBlock(selectors, lines, extraLines = []) {
@@ -177,18 +251,35 @@ function generate() {
     '  --font-sans: var(--font-inter, ui-sans-serif, system-ui, sans-serif);'
   ];
 
-  const lightLines = buildThemeVars(variables, 'Light');
-  const darkLines = buildThemeVars(variables, 'Dark');
-  const lightGlassLines = buildThemeVars(
+  const lightTheme = buildThemeVars(variables, 'Light');
+  const darkTheme = buildThemeVars(variables, 'Dark');
+  const lightGlassTheme = buildThemeVars(
     variables,
     'Light',
     GLASS_OVERRIDES['light-glass'].Light
   );
-  const darkGlassLines = buildThemeVars(
+  const darkGlassTheme = buildThemeVars(
     variables,
     'Dark',
     GLASS_OVERRIDES['dark-glass'].Dark
   );
+
+  const lightLines = [
+    ...lightTheme.lines,
+    ...buildDerivedThemeVars(lightTheme.resolvedNames)
+  ];
+  const darkLines = [
+    ...darkTheme.lines,
+    ...buildDerivedThemeVars(darkTheme.resolvedNames)
+  ];
+  const lightGlassLines = [
+    ...lightGlassTheme.lines,
+    ...buildDerivedThemeVars(lightGlassTheme.resolvedNames)
+  ];
+  const darkGlassLines = [
+    ...darkGlassTheme.lines,
+    ...buildDerivedThemeVars(darkGlassTheme.resolvedNames)
+  ];
 
   const glassExtras = [
     '  /* Glass effect */',

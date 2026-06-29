@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 export type SidebarNavVariant = "main" | "sub";
 
@@ -38,6 +38,8 @@ export type SidebarProps = {
   width?: number;
   motion?: SidebarMotionConfig;
   renderLink?: (props: SidebarNavLinkRenderProps) => ReactNode;
+  style?: CSSProperties;
+  className?: string;
 };
 
 export type SubSidebarProps = {
@@ -51,6 +53,8 @@ export type SubSidebarProps = {
   collapseIcon?: ReactNode;
   collapseControl?: ReactNode;
   renderLink?: (props: SidebarNavLinkRenderProps) => ReactNode;
+  style?: CSSProperties;
+  className?: string;
 };
 
 export type SubSidebarExpandTriggerProps = {
@@ -58,6 +62,8 @@ export type SubSidebarExpandTriggerProps = {
   expandAriaLabel?: string;
   expandIcon?: ReactNode;
   trigger?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export type AppHeaderProps = {
@@ -69,4 +75,26 @@ export type AppHeaderProps = {
   sidebarToggleAriaLabel?: string;
   toggleOpenIcon?: ReactNode;
   toggleCloseIcon?: ReactNode;
+  style?: CSSProperties;
+  className?: string;
+};
+
+export type AppShellProps = {
+  children: ReactNode;
+  logo?: ReactNode;
+  headerActions?: ReactNode;
+  mainNavItems: SidebarNavItemData[];
+  secondaryNavItems?: SidebarNavItemData[];
+  subNavItems: SidebarNavItemData[];
+  sidebarFooter?: ReactNode;
+  toggleOpenIcon?: ReactNode;
+  toggleCloseIcon?: ReactNode;
+  collapseIcon?: ReactNode;
+  expandIcon?: ReactNode;
+  shellStyle?: CSSProperties;
+  glassStyle?: CSSProperties;
+  defaultSidebarOpen?: boolean;
+  defaultSubSidebarOpen?: boolean;
+  renderLink?: (props: SidebarNavLinkRenderProps) => ReactNode;
+  className?: string;
 };

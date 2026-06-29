@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM"],
     "jsx": "react-jsx",
     "types": ["node", "jest"],
     "moduleResolution": "nodenext",
@@ -15,12 +15,17 @@
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
     "outDir": "./dist",
     "rootDir": "./"
   },
-  "include": ["**/*.ts", "**/*.tsx", "vite-env.d.ts", ".storybook/**/*", "stories/**/*"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "vite-env.d.ts",
+    ".storybook/**/*",
+    "stories/**/*"
+  ],
   "exclude": ["node_modules", "dist", "storybook-static"]
 }
 
