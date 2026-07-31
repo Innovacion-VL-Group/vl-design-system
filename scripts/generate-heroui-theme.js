@@ -7,7 +7,8 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const SOURCE = join(ROOT, 'theme', 'figma-theme-source.json');
-const OUTPUT = join(ROOT, 'theme', 'heroui-theme.css');
+const OUTPUT_CSS = join(ROOT, 'theme', 'heroui-theme.css');
+const OUTPUT_COLORS = join(ROOT, 'theme', 'colors.ts');
 
 const FIGMA_TO_HEROUI = {
   'accent/accent': 'accent',
@@ -196,9 +197,15 @@ function colorToCss(value) {
     : `oklch(${l}% ${c} ${h})`;
 }
 
+/** --separator-tertiary → separatorTertiary */
+function cssNameToCamel(cssName) {
+  return cssName.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+}
+
 function buildThemeVars(variables, mode, overrides = {}) {
   const byName = Object.fromEntries(variables.map((v) => [v.name, v]));
   const lines = [];
+  const tokens = {};
   const resolvedNames = new Set();
 
   for (const [figmaName, cssName] of Object.entries(FIGMA_TO_HEROUI)) {
@@ -212,27 +219,37 @@ function buildThemeVars(variables, mode, overrides = {}) {
       const css = colorToCss(raw);
       if (css) {
         lines.push(`  --${cssName}: ${css};`);
+        tokens[cssNameToCamel(cssName)] = css;
         resolvedNames.add(cssName);
       }
     }
   }
 
-  return { lines, resolvedNames };
+  return { lines, tokens, resolvedNames };
 }
 
 function buildDerivedThemeVars(resolvedNames) {
   const lines = ['', '  /* Derived Colors (HeroUI-compatible) */'];
+  const tokens = {};
 
   for (const [cssName, value] of Object.entries(DERIVED_THEME_TOKENS)) {
     if (resolvedNames.has(cssName)) continue;
     lines.push(`  --${cssName}: ${value};`);
+    tokens[cssNameToCamel(cssName)] = value;
   }
 
-  return lines.length > 2 ? lines : [];
+  return {
+    lines: lines.length > 2 ? lines : [],
+    tokens
+  };
 }
 
-function buildBlock(selectors, lines, extraLines = []) {
-  return `${selectors} {\n${[...lines, ...extraLines].join('\n')}\n}`;
+function serializeTokensObject(tokens, indent = 2) {
+  const pad = ' '.repeat(indent);
+  const entries = Object.entries(tokens)
+    .map(([key, value]) => `${pad}${key}: ${JSON.stringify(value)},`)
+    .join('\n');
+  return entries;
 }
 
 function generate() {
@@ -264,22 +281,22 @@ function generate() {
     GLASS_OVERRIDES['dark-glass'].Dark
   );
 
-  const lightLines = [
-    ...lightTheme.lines,
-    ...buildDerivedThemeVars(lightTheme.resolvedNames)
-  ];
-  const darkLines = [
-    ...darkTheme.lines,
-    ...buildDerivedThemeVars(darkTheme.resolvedNames)
-  ];
-  const lightGlassLines = [
-    ...lightGlassTheme.lines,
-    ...buildDerivedThemeVars(lightGlassTheme.resolvedNames)
-  ];
-  const darkGlassLines = [
-    ...darkGlassTheme.lines,
-    ...buildDerivedThemeVars(darkGlassTheme.resolvedNames)
-  ];
+  const lightDerived = buildDerivedThemeVars(lightTheme.resolvedNames);
+  const darkDerived = buildDerivedThemeVars(darkTheme.resolvedNames);
+  const lightGlassDerived = buildDerivedThemeVars(lightGlassTheme.resolvedNames);
+  const darkGlassDerived = buildDerivedThemeVars(darkGlassTheme.resolvedNames);
+
+  const lightLines = [...lightTheme.lines, ...lightDerived.lines];
+  const darkLines = [...darkTheme.lines, ...darkDerived.lines];
+  const lightGlassLines = [...lightGlassTheme.lines, ...lightGlassDerived.lines];
+  const darkGlassLines = [...darkGlassTheme.lines, ...darkGlassDerived.lines];
+
+  const themeColors = {
+    light: { ...lightTheme.tokens, ...lightDerived.tokens },
+    dark: { ...darkTheme.tokens, ...darkDerived.tokens },
+    'light-glass': { ...lightGlassTheme.tokens, ...lightGlassDerived.tokens },
+    'dark-glass': { ...darkGlassTheme.tokens, ...darkGlassDerived.tokens }
+  };
 
   const glassExtras = [
     '  /* Glass effect */',
@@ -335,8 +352,34 @@ ${[...sharedExtras, ...glassExtras].join('\n')}
 }
 `;
 
-  writeFileSync(OUTPUT, css);
-  console.info(`✅ Generated ${OUTPUT}`);
+  const colorsTs = `/*
+ * Theme color tokens — VL Design System
+ * Generated from Figma collection "02_Theme (HeroUI)"
+ * Same values as heroui-theme.css (oklch / color-mix / var strings).
+ *
+ * Regenerate: pnpm generate-theme
+ */
+
+export const themeColors = {
+  light: {
+${serializeTokensObject(themeColors.light, 4)}
+  },
+  dark: {
+${serializeTokensObject(themeColors.dark, 4)}
+  },
+  "light-glass": {
+${serializeTokensObject(themeColors['light-glass'], 4)}
+  },
+  "dark-glass": {
+${serializeTokensObject(themeColors['dark-glass'], 4)}
+  },
+} as const;
+`;
+
+  writeFileSync(OUTPUT_CSS, css);
+  writeFileSync(OUTPUT_COLORS, colorsTs);
+  console.info(`✅ Generated ${OUTPUT_CSS}`);
+  console.info(`✅ Generated ${OUTPUT_COLORS}`);
 }
 
 generate();

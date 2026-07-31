@@ -34,6 +34,11 @@ Available themes via `data-theme` or class:
 
 Glass themes use semi-transparent surfaces and expose `--glass-blur` / `--glass-saturation` for backdrop effects.
 
+```ts
+import { themeColors } from "vl-design-system/theme";
+themeColors.light.accent
+```
+
 ### Cambiar de tema con React
 
 ```tsx
@@ -258,7 +263,7 @@ Update `theme/figma-theme-source.json` (exported from Figma **02_Theme (HeroUI)*
 npm run generate-theme
 ```
 
-This regenerates `theme/heroui-theme.css`.
+This regenerates `theme/heroui-theme.css` and `theme/colors.ts`.
 
 ## License
 

@@ -11,6 +11,7 @@
     "index.ts",
     "types.ts",
     "theme/index.ts",
+    "theme/colors.ts",
     "components/**/*.ts",
     "components/**/*.tsx"
   ],
